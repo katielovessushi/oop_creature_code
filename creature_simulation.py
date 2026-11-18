@@ -68,6 +68,33 @@ class FlyingCreature(Creature):
             target.hp = 0
         print(f"{target.name} HP is now {target.hp}")
 
+
+# ===============================
+# FireCreature Branch
+# ===============================
+
+class FireCreature(Creature):
+    def __init__(self, name, hp, attack_power):
+        super().__init__(name, hp, attack_power)
+        self.fire_level = 0
+
+    def emit_fire(self, new_fire_level):
+        self.fire_level = new_fire_level
+        print(f'{self.name} emits fire level {self.fire_level}.')
+        return
+
+    def attack(self, target):
+        if not self.is_alive():
+            print(f'{self.name} cannot attack because it is defeated.')
+            return
+
+        print(f'{self.name} fire attacks at level {self.fire_level}!')
+        print(f'It burns {target.name} for {self.attack_power} damage!')
+        target.hp -= self.attack_power
+        if target.hp < 0:
+            target.hp = 0
+        print(f'{target.name} HP is now {target.hp}')
+
 if __name__ == "__main__":
     print("=== Creature Class Tests ===\n")
 
@@ -140,6 +167,19 @@ if __name__ == "__main__":
     hawk.attack(dummy)
     print(f"Dummy HP should be 32 → Actual: {dummy.hp}")
     dummy.attack(hawk)
+    print()
+    print("=== Tests Completed ===")
+    print()
+
+    print("=== FireCreature Tests ===\n")
+    therock = FireCreature("The Rock", 67, 8)
+    therock.emit_fire(100)
+    print(f'Fire level should be 100 → Actual: {therock.fire_level}')
+
+    dummy = Creature('Practice Dummy', 40, 0)
+    therock.attack(dummy)
+    print(f'Dummy HP should be 32 → Acrual: {dummy.hp}')
+    dummy.attack(therock)
     print()
     print("=== Tests Completed ===")
     print()
